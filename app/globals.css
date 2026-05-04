@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Cormorant Garamond", serif;
+  --font-body:    "DM Sans", sans-serif;
+}
+
+@layer base {
+  html { @apply scroll-smooth; }
+  body {
+    @apply font-body antialiased;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+  h1, h2, h3, h4, h5 { @apply font-display tracking-tight; }
+}
+
+/* ── Keyframes (referenced by Tailwind animate-[...] JIT) ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes gridDrift {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(72px, 72px); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 1;   }
+}
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ── Component classes ──────────────────────────────────── */
+@layer components {
+  .tile-card { @apply relative overflow-hidden cursor-pointer bg-base-200 transition-all duration-500; }
+  .tile-card:hover .tile-image          { @apply scale-105; }
+  .tile-card:hover .tile-overlay-content{ @apply opacity-100 translate-y-0; }
+  .tile-image { @apply w-full h-full object-cover transition-transform duration-700 ease-out; }
+  .tile-overlay-content { @apply absolute bottom-0 left-0 right-0 z-10 p-5 opacity-0 translate-y-3 transition-all duration-500 ease-out; }
+
+  .gallery-grid { @apply grid gap-0.5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4; }
+
+  .nav-link { @apply relative text-sm tracking-widest uppercase font-body text-base-content/70 hover:text-base-content transition-colors duration-300; }
+  .nav-link::after { content: ""; @apply absolute -bottom-0.5 left-0 h-px w-0 bg-primary transition-all duration-300; }
+  .nav-link:hover::after { @apply w-full; }
+
+  .section-title { @apply font-display text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-tight; }
+
+  .divider-ornament { @apply flex items-center gap-4 text-primary/40 my-6; }
+  .divider-ornament::before, .divider-ornament::after { content: ""; @apply flex-1 h-px bg-base-content/10; }
+}
+
+/* ── Stagger utilities ───────────────────────────────────── */
+@layer utilities {
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-5 { animation-delay: 0.5s; }
+  .opacity-anim { opacity: 0; @apply animate-[fadeUp_.6s_ease_forwards]; }
+}
